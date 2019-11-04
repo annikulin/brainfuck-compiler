@@ -1,9 +1,6 @@
 # IntelliJ IDEA modules and interim config files.
 *.iml
-.idea/*.xml
-.idea/.name
-.idea/libraries/**
-.idea/modules/**
+.idea
 
 # Ignore Gradle project-specific cache directory
 .gradle
