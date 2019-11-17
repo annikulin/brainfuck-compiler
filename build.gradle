@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'idea'
 
     id 'checkstyle'
     id 'pmd'
@@ -14,7 +15,8 @@ repositories {
 
 dependencies {
     implementation 'com.google.guava:guava:28.0-jre'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
 
     errorprone("com.google.errorprone:error_prone_core:2.3.3")
     errorproneJavac("com.google.errorprone:javac:9+181-r4173-1")
@@ -22,6 +24,10 @@ dependencies {
 
 application {
     mainClassName = 'com.antnikul.brainfuck.BrainfuckCompiler'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 pmd {

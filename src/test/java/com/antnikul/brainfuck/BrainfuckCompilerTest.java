@@ -1,11 +1,15 @@
 package com.antnikul.brainfuck;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BrainfuckCompilerTest {
-    @Test(expected = UnsupportedOperationException.class)
-    public void testExecuteProgram() {
-        BrainfuckCompiler classUnderTest = new BrainfuckCompiler();
-        classUnderTest.executeProgram();
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class BrainfuckCompilerTest {
+    @Test
+    void testExecuteProgram() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            BrainfuckCompiler classUnderTest = new BrainfuckCompiler();
+            classUnderTest.executeProgram();
+        });
     }
 }
