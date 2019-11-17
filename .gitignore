@@ -1,5 +1,7 @@
 # IntelliJ IDEA modules and interim config files.
 *.iml
+*.ipr
+*.iws
 .idea
 
 # Ignore Gradle project-specific cache directory
