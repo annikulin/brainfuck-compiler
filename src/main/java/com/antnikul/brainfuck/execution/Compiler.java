@@ -1,11 +1,11 @@
-package com.antnikul.brainfuck;
+package com.antnikul.brainfuck.execution;
 
 /**
  * A command-line tool to compile Brainfuck files to JavaScript.
  */
-public class BrainfuckCompiler {
+public class Compiler {
     public static void main(String[] args) {
-        System.out.println(new BrainfuckCompiler().executeProgram());
+        System.out.println(new Compiler().executeProgram());
     }
 
     public String executeProgram() {
