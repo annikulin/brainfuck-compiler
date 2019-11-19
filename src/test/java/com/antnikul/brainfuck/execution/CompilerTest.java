@@ -1,6 +1,5 @@
 package com.antnikul.brainfuck.execution;
 
-import com.antnikul.brainfuck.execution.Compiler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

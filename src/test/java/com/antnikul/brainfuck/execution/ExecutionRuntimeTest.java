@@ -3,7 +3,8 @@ package com.antnikul.brainfuck.execution;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExecutionRuntimeTest {
 
@@ -42,10 +43,10 @@ class ExecutionRuntimeTest {
     }
 
     @Test
-    @DisplayName("Pointer should be shifted right and left depending on the passed value")
+    @DisplayName("Exception should be thrown when pointer is shifted outside array bounds")
     void shiftPointerOutsideArrayBounds() {
         ExecutionRuntime runtime = new ExecutionRuntime(10);
-        assertThrows(IllegalArgumentException.class, () -> runtime.shiftPointer(-1));
-        assertThrows(IllegalArgumentException.class, () -> runtime.shiftPointer(10));
+        assertThrows(BrainfuckRuntimeException.class, () -> runtime.shiftPointer(-1));
+        assertThrows(BrainfuckRuntimeException.class, () -> runtime.shiftPointer(10));
     }
 }

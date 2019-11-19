@@ -46,11 +46,11 @@ public class ExecutionRuntime {
      * <p>
      * If passed {@code value} is positive, the pointer is moved to the right, if negative - to the left.
      *
-     * @param value a byte value the pointer to be shifted by
+     * @param value a value the pointer to be shifted by
      */
     public void shiftPointer(int value) {
         if (pointer + value < 0 || pointer + value >= cells.length) {
-            throw new IllegalArgumentException("Instruction pointer cannot be moved outside the bounds of the array");
+            throw new BrainfuckRuntimeException("Instruction pointer cannot be moved outside the bounds of the array");
         }
         pointer += value;
     }
