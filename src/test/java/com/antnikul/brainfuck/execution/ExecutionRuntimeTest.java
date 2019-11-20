@@ -3,6 +3,9 @@ package com.antnikul.brainfuck.execution;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -34,7 +37,7 @@ class ExecutionRuntimeTest {
 
     @Test
     @DisplayName("Pointer should be shifted right and left depending on the passed value")
-    void shiftPointer() {
+    void shiftPointer() throws BrainfuckExecutionException {
         executionRuntime.incrementCellValue((byte) 5);
         executionRuntime.shiftPointer(10);
         assertEquals(0, executionRuntime.getCellValue());
@@ -45,8 +48,18 @@ class ExecutionRuntimeTest {
     @Test
     @DisplayName("Exception should be thrown when pointer is shifted outside array bounds")
     void shiftPointerOutsideArrayBounds() {
-        ExecutionRuntime runtime = new ExecutionRuntime(10);
-        assertThrows(BrainfuckRuntimeException.class, () -> runtime.shiftPointer(-1));
-        assertThrows(BrainfuckRuntimeException.class, () -> runtime.shiftPointer(10));
+        ExecutionRuntime runtime = new ExecutionRuntime(10, System.out);
+        assertThrows(BrainfuckExecutionException.class, () -> runtime.shiftPointer(-1));
+        assertThrows(BrainfuckExecutionException.class, () -> runtime.shiftPointer(10));
+    }
+
+    @Test
+    @DisplayName("Print should output bytes to the output stream")
+    void print() throws BrainfuckExecutionException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ExecutionRuntime runtime = new ExecutionRuntime(10, outputStream);
+        runtime.print((byte) 1, (byte) 2);
+        runtime.print((byte) 3);
+        assertArrayEquals(new byte[]{1, 2, 3}, outputStream.toByteArray());
     }
 }

@@ -1,5 +1,6 @@
 package com.antnikul.brainfuck.parsing.expression;
 
+import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -59,6 +60,7 @@ public abstract class Expression {
      * runtime}.
      *
      * @param runtime an environment with current state of the program
+     * @throws BrainfuckExecutionException if expression execution fails
      */
-    public abstract void execute(ExecutionRuntime runtime);
+    public abstract void execute(ExecutionRuntime runtime) throws BrainfuckExecutionException;
 }

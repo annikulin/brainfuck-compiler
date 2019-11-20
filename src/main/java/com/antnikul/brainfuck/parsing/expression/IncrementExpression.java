@@ -3,6 +3,8 @@ package com.antnikul.brainfuck.parsing.expression;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
 import com.google.common.base.Objects;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * An {@link Expression} representing one or more increment or decrement commands in Brainfuck language.
  */
@@ -17,6 +19,7 @@ class IncrementExpression extends Expression {
 
     @Override
     public void execute(ExecutionRuntime runtime) {
+        checkNotNull(runtime);
         runtime.incrementCellValue(this.value);
     }
 

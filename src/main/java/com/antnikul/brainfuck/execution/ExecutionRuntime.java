@@ -1,5 +1,8 @@
 package com.antnikul.brainfuck.execution;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * An environment where a Brainfuck program runs.
  * <p>
@@ -11,14 +14,16 @@ public class ExecutionRuntime {
 
     private int pointer;
     private byte[] cells;
+    private OutputStream outputStream;
 
     public ExecutionRuntime() {
-        this(DEFAULT_ARRAY_SIZE);
+        this(DEFAULT_ARRAY_SIZE, System.out);
     }
 
-    public ExecutionRuntime(int cellNumber) {
+    public ExecutionRuntime(int cellNumber, OutputStream outputStream) {
         this.cells = new byte[cellNumber];
         this.pointer = 0;
+        this.outputStream = outputStream;
     }
 
     /**
@@ -47,11 +52,27 @@ public class ExecutionRuntime {
      * If passed {@code value} is positive, the pointer is moved to the right, if negative - to the left.
      *
      * @param value a value the pointer to be shifted by
+     * @throws BrainfuckExecutionException if an pointer is moved outside array bounds
      */
-    public void shiftPointer(int value) {
+    public void shiftPointer(int value) throws BrainfuckExecutionException {
         if (pointer + value < 0 || pointer + value >= cells.length) {
-            throw new BrainfuckRuntimeException("Instruction pointer cannot be moved outside the bounds of the array");
+            throw new BrainfuckExecutionException("Instruction pointer cannot be moved outside the bounds of the " +
+                    "array");
         }
         pointer += value;
+    }
+
+    /**
+     * Prints bytes to the output stream.
+     *
+     * @param values - byte values to output
+     * @throws BrainfuckExecutionException if an I/O error occurs
+     */
+    public void print(byte... values) throws BrainfuckExecutionException {
+        try {
+            outputStream.write(values);
+        } catch (IOException e) {
+            throw new BrainfuckExecutionException("Cannot execute Brainfuck output instruction due to I/O error", e);
+        }
     }
 }
