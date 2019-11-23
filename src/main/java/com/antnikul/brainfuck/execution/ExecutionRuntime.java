@@ -20,6 +20,10 @@ public class ExecutionRuntime {
         this(DEFAULT_ARRAY_SIZE, System.out);
     }
 
+    public ExecutionRuntime(OutputStream outputStream) {
+        this(DEFAULT_ARRAY_SIZE, outputStream);
+    }
+
     public ExecutionRuntime(int cellNumber, OutputStream outputStream) {
         this.cells = new byte[cellNumber];
         this.pointer = 0;
