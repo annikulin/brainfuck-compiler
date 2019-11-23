@@ -65,7 +65,7 @@ public class ExecutionRuntime {
     /**
      * Prints bytes to the output stream.
      *
-     * @param values - byte values to output
+     * @param values byte values to output
      * @throws BrainfuckExecutionException if an I/O error occurs
      */
     public void print(byte... values) throws BrainfuckExecutionException {

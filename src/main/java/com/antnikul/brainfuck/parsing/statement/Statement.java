@@ -22,7 +22,7 @@ public abstract class Statement {
     }
 
     public static PrintStatement newPrintStatement() {
-        return new PrintStatement();
+        return PrintStatement.getInstance();
     }
 
     /**

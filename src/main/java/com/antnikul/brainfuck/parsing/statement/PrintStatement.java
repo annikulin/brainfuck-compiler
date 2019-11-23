@@ -10,6 +10,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 class PrintStatement extends Statement {
 
+    private static PrintStatement instance;
+
+    // private constructor to avoid initialization from outside
+    private PrintStatement() {
+        super();
+    }
+
+    static PrintStatement getInstance() {
+        if (instance == null) {
+            instance = new PrintStatement();
+        }
+        return instance;
+    }
+
     @Override
     public void execute(ExecutionRuntime runtime) throws BrainfuckExecutionException {
         checkNotNull(runtime);
