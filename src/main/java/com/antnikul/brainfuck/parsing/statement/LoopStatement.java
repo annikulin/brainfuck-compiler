@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.parsing.statement;
 
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 import com.google.common.base.Objects;
 
 import java.util.ArrayList;
@@ -32,8 +33,17 @@ public class LoopStatement extends Statement {
         }
     }
 
+    @Override
+    public String export(BrainfuckExporter exporter) {
+        return exporter.exportLoopStatement(this);
+    }
+
     public void addStatement(Statement statement) {
         this.statements.add(statement);
+    }
+
+    public List<Statement> getStatements() {
+        return statements;
     }
 
     @Override

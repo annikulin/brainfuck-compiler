@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.parsing.expression;
 
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 import com.google.common.base.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -10,7 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * An {@link Expression} representing one or more shift commands that increment or decrement the data pointer in
  * Brainfuck language.
  */
-class ShiftExpression extends Expression {
+public class ShiftExpression extends Expression {
 
     private int value;
 
@@ -23,6 +24,15 @@ class ShiftExpression extends Expression {
     public void execute(ExecutionRuntime runtime) throws BrainfuckExecutionException {
         checkNotNull(runtime);
         runtime.shiftPointer(value);
+    }
+
+    @Override
+    public String export(BrainfuckExporter exporter) {
+        return exporter.exportShiftExpression(this);
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

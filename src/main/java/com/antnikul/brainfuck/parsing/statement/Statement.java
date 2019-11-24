@@ -3,6 +3,7 @@ package com.antnikul.brainfuck.parsing.statement;
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
 import com.antnikul.brainfuck.parsing.expression.Expression;
+import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 
 
 import static java.util.Arrays.asList;
@@ -26,11 +27,20 @@ public abstract class Statement {
     }
 
     /**
-     * A base method to be overridden in child classes that executes the statement and carries out certain action by
-     * making changes in {@code runtime}.
+     * Executes the statement and carries out certain action by making changes in {@code runtime}. It is a base
+     * method that should be overridden in child classes.
      *
      * @param runtime an environment with current state of the program
      * @throws BrainfuckExecutionException if expression execution fails
      */
     public abstract void execute(ExecutionRuntime runtime) throws BrainfuckExecutionException;
+
+    /**
+     * Exports the statement using given {@code exporter} and returns a code snippet corresponding to the statement
+     * functionality but written in a different programming language.
+     *
+     * @param exporter an exporter to convert statement to another programming language
+     * @return a transpiled code snippet
+     */
+    public abstract String export(BrainfuckExporter exporter);
 }

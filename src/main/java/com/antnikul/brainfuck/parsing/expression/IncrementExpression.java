@@ -1,6 +1,7 @@
 package com.antnikul.brainfuck.parsing.expression;
 
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 import com.google.common.base.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -8,7 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * An {@link Expression} representing one or more increment or decrement commands in Brainfuck language.
  */
-class IncrementExpression extends Expression {
+public class IncrementExpression extends Expression {
 
     private byte value;
 
@@ -21,6 +22,15 @@ class IncrementExpression extends Expression {
     public void execute(ExecutionRuntime runtime) {
         checkNotNull(runtime);
         runtime.incrementCellValue(this.value);
+    }
+
+    @Override
+    public String export(BrainfuckExporter exporter) {
+        return exporter.exportIncrementExpression(this);
+    }
+
+    public byte getValue() {
+        return value;
     }
 
     @Override
