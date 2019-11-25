@@ -17,9 +17,9 @@ public class BrainfuckToJavaScriptExporter implements BrainfuckExporter {
     @Override
     public String exportRuntimeInitialization() {
         StringJoiner output = new StringJoiner(NEW_LINE_CONST, "", NEW_LINE_CONST);
-        output.add("const MEMORY_SIZE = 30000" + SEMICOLON_CONST);
-        output.add("const cells = new Array(MEMORY_SIZE).fill(0)" + SEMICOLON_CONST);
-        output.add("let pointer = 0" + SEMICOLON_CONST);
+        output.add("var MEMORY_SIZE = 30000" + SEMICOLON_CONST);
+        output.add("var cells = Array.apply(null, Array(MEMORY_SIZE)).map(Number.prototype.valueOf,0)" + SEMICOLON_CONST);
+        output.add("var pointer = 0" + SEMICOLON_CONST);
         return output.toString();
     }
 
@@ -36,7 +36,7 @@ public class BrainfuckToJavaScriptExporter implements BrainfuckExporter {
     @Override
     public String exportPrintStatement(PrintStatement stmt) {
         checkNotNull(stmt);
-        return "console.log(String.fromCharCode(cells[pointer]))" + SEMICOLON_CONST + NEW_LINE_CONST;
+        return "print(String.fromCharCode(cells[pointer]))" + SEMICOLON_CONST + NEW_LINE_CONST;
     }
 
     @Override

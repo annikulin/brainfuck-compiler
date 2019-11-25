@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BrainfuckCompilerTest {
     @Test
     @DisplayName("Compiler running HelloWorld program should write `Hello World!` to the output stream")
-    void testRunHelloWorld() throws IOException, BrainfuckExecutionException {
+    void runHelloWorld() throws IOException, BrainfuckExecutionException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
 
@@ -27,7 +27,7 @@ class BrainfuckCompilerTest {
 
     @Test
     @DisplayName("Compiler running SumTwoValues program must sum up values in the execution runtime")
-    void testRunSumTwoValues() throws IOException, BrainfuckExecutionException {
+    void runSumTwoValues() throws IOException, BrainfuckExecutionException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
         runtime.incrementCellValue((byte) 111);
@@ -46,7 +46,7 @@ class BrainfuckCompilerTest {
 
     @Test
     @DisplayName("Compiler running factorial algorithm should write first five factorials to the output stream")
-    void testRunFactorialAlgorithm() throws IOException, BrainfuckExecutionException {
+    void runFactorialAlgorithm() throws IOException, BrainfuckExecutionException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
 

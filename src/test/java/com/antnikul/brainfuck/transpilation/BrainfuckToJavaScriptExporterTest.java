@@ -16,8 +16,9 @@ class BrainfuckToJavaScriptExporterTest {
     @DisplayName("Exporter should initialize pointer and array with cells")
     void exportRuntimeInitialization() {
         String actualCodeSnippet = exporter.exportRuntimeInitialization();
-        assertTrue(actualCodeSnippet.contains("const cells = new Array(MEMORY_SIZE).fill(0);"));
-        assertTrue(actualCodeSnippet.contains("let pointer = 0;"));
+        assertTrue(actualCodeSnippet.contains("var cells = Array.apply(null, Array(MEMORY_SIZE)).map(Number.prototype" +
+                ".valueOf,0);"));
+        assertTrue(actualCodeSnippet.contains("var pointer = 0;"));
     }
 
     @Test
@@ -36,7 +37,7 @@ class BrainfuckToJavaScriptExporterTest {
     @DisplayName("Exporter should print current cell value when exporting print statement")
     void exportPrintStatement() {
         String actualCodeSnippet = exporter.exportPrintStatement(Statement.newPrintStatement());
-        assertEquals("console.log(String.fromCharCode(cells[pointer]));\n", actualCodeSnippet);
+        assertEquals("print(String.fromCharCode(cells[pointer]));\n", actualCodeSnippet);
     }
 
     @Test
