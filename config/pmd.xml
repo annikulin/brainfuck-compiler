@@ -21,6 +21,10 @@
 
 <ruleset name="Brainfuck Compiler ruleset">
 
+    <description>
+        Custom ruleset for Brainfuck Compiler project
+    </description>
+
     <rule ref="category/java/errorprone.xml/NonCaseLabelInSwitchStatement"/>
     <rule ref="category/java/errorprone.xml/MissingBreakInSwitch"/>
     <rule ref="category/java/codestyle.xml/NoPackage"/>
