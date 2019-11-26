@@ -1,10 +1,10 @@
 package com.antnikul.brainfuck.execution;
 
-import com.antnikul.brainfuck.lexing.LexicalAnalyzer;
-import com.antnikul.brainfuck.lexing.Token;
-import com.antnikul.brainfuck.optimization.CodeOptimizer;
-import com.antnikul.brainfuck.parsing.Parser;
-import com.antnikul.brainfuck.parsing.statement.Statement;
+import com.antnikul.brainfuck.compilation.lexing.LexicalAnalyzer;
+import com.antnikul.brainfuck.compilation.lexing.Token;
+import com.antnikul.brainfuck.compilation.optimization.CodeOptimizer;
+import com.antnikul.brainfuck.compilation.parsing.Parser;
+import com.antnikul.brainfuck.compilation.parsing.statement.Statement;
 
 import java.io.IOException;
 import java.io.Reader;
