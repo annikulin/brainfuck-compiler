@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.execution;
 
 import com.antnikul.brainfuck.lexing.LexicalAnalyzer;
 import com.antnikul.brainfuck.lexing.Token;
+import com.antnikul.brainfuck.optimization.CodeOptimizer;
 import com.antnikul.brainfuck.parsing.Parser;
 import com.antnikul.brainfuck.parsing.statement.Statement;
 
@@ -31,7 +32,8 @@ public class BrainfuckCompiler {
     public void run(Reader input) throws IOException, BrainfuckExecutionException {
         List<Token> tokens = LexicalAnalyzer.tokenize(input);
         List<Statement> statements = Parser.parse(tokens);
-        for (Statement s : statements) {
+        List<Statement> optimizedStatements = CodeOptimizer.optimize(statements);
+        for (Statement s : optimizedStatements) {
             s.execute(runtime);
         }
     }

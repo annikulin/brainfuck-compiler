@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.transpilation;
 
 import com.antnikul.brainfuck.lexing.LexicalAnalyzer;
 import com.antnikul.brainfuck.lexing.Token;
+import com.antnikul.brainfuck.optimization.CodeOptimizer;
 import com.antnikul.brainfuck.parsing.Parser;
 import com.antnikul.brainfuck.parsing.statement.Statement;
 
@@ -32,11 +33,11 @@ public class BrainfuckTranspiler {
     public void transpile(Reader input, Writer output) throws IOException {
         List<Token> tokens = LexicalAnalyzer.tokenize(input);
         List<Statement> statements = Parser.parse(tokens);
+        List<Statement> optimizedStatements = CodeOptimizer.optimize(statements);
 
         String initCodeSnippet = exporter.exportRuntimeInitialization();
         output.write(initCodeSnippet);
-
-        for (Statement s : statements) {
+        for (Statement s : optimizedStatements) {
             String codeSnippet = s.export(exporter);
             output.write(codeSnippet);
         }

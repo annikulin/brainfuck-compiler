@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.parsing.statement;
 
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.optimization.OptimizationStrategy;
 import com.antnikul.brainfuck.parsing.expression.Expression;
 import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 import com.google.common.base.Objects;
@@ -34,6 +35,11 @@ public class ExpressionStatement extends Statement {
     @Override
     public String export(BrainfuckExporter exporter) {
         return exporter.exportExpressionStatement(this);
+    }
+
+    @Override
+    public void optimize(OptimizationStrategy strategy) {
+        this.expressions = strategy.optimizeExpressions(expressions);
     }
 
     public List<Expression> getExpressions() {

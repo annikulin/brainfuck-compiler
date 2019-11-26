@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.parsing.statement;
 
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.optimization.OptimizationStrategy;
 import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 import com.google.common.base.Objects;
 
@@ -36,6 +37,11 @@ public class LoopStatement extends Statement {
     @Override
     public String export(BrainfuckExporter exporter) {
         return exporter.exportLoopStatement(this);
+    }
+
+    @Override
+    public void optimize(OptimizationStrategy strategy) {
+        this.getStatements().forEach(s -> s.optimize(strategy));
     }
 
     public void addStatement(Statement statement) {

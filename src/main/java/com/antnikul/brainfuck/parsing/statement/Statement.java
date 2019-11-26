@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.parsing.statement;
 
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.optimization.OptimizationStrategy;
 import com.antnikul.brainfuck.parsing.expression.Expression;
 import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 
@@ -43,4 +44,11 @@ public abstract class Statement {
      * @return a transpiled code snippet
      */
     public abstract String export(BrainfuckExporter exporter);
+
+    /**
+     * Optimizes internal structure of the statement using given optimization {@code strategy}.
+     *
+     * @param strategy an optimization algorithm
+     */
+    public abstract void optimize(OptimizationStrategy strategy);
 }

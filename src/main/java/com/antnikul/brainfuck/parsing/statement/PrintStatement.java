@@ -2,6 +2,7 @@ package com.antnikul.brainfuck.parsing.statement;
 
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
 import com.antnikul.brainfuck.execution.ExecutionRuntime;
+import com.antnikul.brainfuck.optimization.OptimizationStrategy;
 import com.antnikul.brainfuck.transpilation.BrainfuckExporter;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -34,5 +35,10 @@ public class PrintStatement extends Statement {
     @Override
     public String export(BrainfuckExporter exporter) {
         return exporter.exportPrintStatement(this);
+    }
+
+    @Override
+    public void optimize(OptimizationStrategy strategy) {
+        // execution of print statement cannot be optimized
     }
 }

@@ -38,6 +38,4 @@ class BrainfuckTranspilerTest {
         // removing line separators as Nashorn JS Engine adds them after every `print` statement
         return programOutput.replaceAll(System.lineSeparator(), "");
     }
-
-
 }
