@@ -9,14 +9,14 @@ import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BrainfuckCompilerTest {
+class BrainfuckJavaInterpreterTest {
     @Test
     @DisplayName("Compiler running HelloWorld program should write `Hello World!` to the output stream")
     void runHelloWorld() throws IOException, BrainfuckExecutionException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
 
-        BrainfuckCompiler compiler = new BrainfuckCompiler(runtime);
+        BrainfuckJavaInterpreter compiler = new BrainfuckJavaInterpreter(runtime);
         String helloWorldProgram =
                 "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------" +
                         ".>>+.";
@@ -35,7 +35,7 @@ class BrainfuckCompilerTest {
         runtime.incrementCellValue((byte) 11);
         runtime.shiftPointer(-1);
 
-        BrainfuckCompiler compiler = new BrainfuckCompiler(runtime);
+        BrainfuckJavaInterpreter compiler = new BrainfuckJavaInterpreter(runtime);
         String sumTwoValuesProgram = "[->+<]";
         compiler.run(new StringReader(sumTwoValuesProgram));
 
@@ -50,7 +50,7 @@ class BrainfuckCompilerTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
 
-        BrainfuckCompiler compiler = new BrainfuckCompiler(runtime);
+        BrainfuckJavaInterpreter compiler = new BrainfuckJavaInterpreter(runtime);
         String factorialProgram =
                 "+++++++++++++++++++++++++++++++++>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>+++" +
                         "+++++++>++++++>>+<<[>++++++++++++++++++++++++++++++++++++++++++++++++.---------------------" +

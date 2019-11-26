@@ -11,14 +11,14 @@ import java.io.Reader;
 import java.util.List;
 
 /**
- * A compiler for Brainfuck language that processes statements written in Brainfuck language, turns them into parse
+ * A interpreter for Brainfuck language that processes statements written in Brainfuck language, turns them into parse
  * model, and executes in Java.
  */
-public class BrainfuckCompiler {
+public class BrainfuckJavaInterpreter {
 
     private ExecutionRuntime runtime;
 
-    public BrainfuckCompiler(ExecutionRuntime runtime) {
+    public BrainfuckJavaInterpreter(ExecutionRuntime runtime) {
         this.runtime = runtime;
     }
 
