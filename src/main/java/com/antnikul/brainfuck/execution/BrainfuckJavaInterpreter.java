@@ -31,9 +31,9 @@ public class BrainfuckJavaInterpreter {
      * @throws BrainfuckExecutionException if program execution failed
      */
     public void run(Reader input) throws IOException, BrainfuckExecutionException, BrainfuckCompilationException {
-        List<Token> tokens = LexicalAnalyzer.tokenize(input);
-        List<Statement> statements = Parser.parse(tokens);
-        List<Statement> optimizedStatements = CodeOptimizer.optimize(statements);
+        List<Token> tokens = LexicalAnalyzer.from(input).tokenize();
+        List<Statement> statements = Parser.from(tokens).parse();
+        List<Statement> optimizedStatements = CodeOptimizer.from(statements).optimize();
         for (Statement s : optimizedStatements) {
             s.execute(runtime);
         }

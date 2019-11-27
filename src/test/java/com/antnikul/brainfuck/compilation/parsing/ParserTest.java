@@ -35,7 +35,7 @@ class ParserTest {
         List<Token> inputTokens = asList(INCREMENT, INCREMENT, SHIFT_RIGHT, DECREMENT, SHIFT_LEFT);
         List<Statement> expectedResult = singletonList(Statement.newExpressionStatement(INC_EXP, INC_EXP,
                 SHIFT_RIGHT_EXP, DEC_EXP, SHIFT_LEFT_EXP));
-        assertEquals(expectedResult, Parser.parse(inputTokens));
+        assertEquals(expectedResult, Parser.from(inputTokens).parse());
     }
 
     @Test
@@ -50,7 +50,7 @@ class ParserTest {
                 Statement.newExpressionStatement(SHIFT_LEFT_EXP),
                 Statement.newPrintStatement()
         );
-        assertEquals(expectedResult, Parser.parse(inputTokens));
+        assertEquals(expectedResult, Parser.from(inputTokens).parse());
     }
 
     @Test
@@ -64,7 +64,7 @@ class ParserTest {
                 Statement.newExpressionStatement(DEC_EXP),
                 Statement.newLoopStatement(Statement.newExpressionStatement(INC_EXP), Statement.newPrintStatement())
         );
-        assertEquals(expectedResult, Parser.parse(inputTokens));
+        assertEquals(expectedResult, Parser.from(inputTokens).parse());
     }
 
     @Test
@@ -87,7 +87,7 @@ class ParserTest {
                 ),
                 Statement.newPrintStatement()
         );
-        assertEquals(expectedResult, Parser.parse(inputTokens));
+        assertEquals(expectedResult, Parser.from(inputTokens).parse());
     }
 
     @Test
@@ -98,7 +98,7 @@ class ParserTest {
                 Statement.newLoopStatement(Statement.newLoopStatement()),
                 Statement.newLoopStatement()
         );
-        assertEquals(expectedResult, Parser.parse(inputTokens));
+        assertEquals(expectedResult, Parser.from(inputTokens).parse());
     }
 
     @Test
@@ -106,7 +106,7 @@ class ParserTest {
     void parseStatementsWithUnclosedLoop() {
         List<Token> inputTokens = asList(LOOP_START, LOOP_START, LOOP_END, LOOP_END, LOOP_START);
         BrainfuckCompilationException thrown = assertThrows(BrainfuckCompilationException.class,
-                () -> Parser.parse(inputTokens));
+                () -> Parser.from(inputTokens).parse());
         assertTrue(thrown.getMessage().contains("Found unclosed loop"));
     }
 
@@ -115,7 +115,7 @@ class ParserTest {
     void parseStatementsWithIncorrectlyClosedLoop() {
         List<Token> inputTokens = asList(LOOP_START, LOOP_START, LOOP_END, LOOP_END, LOOP_END);
         BrainfuckCompilationException thrown = assertThrows(BrainfuckCompilationException.class,
-                () -> Parser.parse(inputTokens));
+                () -> Parser.from(inputTokens).parse());
         assertTrue(thrown.getMessage().contains("Found incorrectly closed loop"));
     }
 }

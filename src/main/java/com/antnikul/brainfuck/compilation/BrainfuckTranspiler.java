@@ -32,9 +32,9 @@ public class BrainfuckTranspiler {
      * @throws IOException if I/O error occurred
      */
     public void transpile(Reader input, Writer output) throws IOException, BrainfuckCompilationException {
-        List<Token> tokens = LexicalAnalyzer.tokenize(input);
-        List<Statement> statements = Parser.parse(tokens);
-        List<Statement> optimizedStatements = CodeOptimizer.optimize(statements);
+        List<Token> tokens = LexicalAnalyzer.from(input).tokenize();
+        List<Statement> statements = Parser.from(tokens).parse();
+        List<Statement> optimizedStatements = CodeOptimizer.from(statements).optimize();
 
         String initCodeSnippet = codeGenerator.generateRuntimeInitialization();
         output.write(initCodeSnippet);

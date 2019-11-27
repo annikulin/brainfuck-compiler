@@ -25,59 +25,81 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class Parser {
 
-    // avoid instantiating utility class
-    private Parser() {
+    private List<Statement> parseModel = new ArrayList<>();
+    private Deque<LoopStatement> loopStack = new ArrayDeque<>();
+    private List<Expression> exprQueue = new ArrayList<>();
+
+    private List<Token> input;
+
+    // private constructor to avoid initialization from outside
+    private Parser(List<Token> input) {
+        this.input = input;
+    }
+
+    public static Parser from(List<Token> input) {
+        return new Parser(input);
     }
 
     /**
      * Analyses a sequence of input token and builds a parse model conforming to the rules of Brainfuck grammar.
      *
-     * @param input a sequence of input elements representing the program
      * @return a list of statements
      * @throws BrainfuckCompilationException if parser fails to construct the parse model from the token sequence
      */
-    public static List<Statement> parse(List<Token> input) throws BrainfuckCompilationException {
+    public List<Statement> parse() throws BrainfuckCompilationException {
         checkNotNull(input);
-
-        List<Statement> returnStatements = new ArrayList<>();
-        Deque<LoopStatement> loopStack = new ArrayDeque<>();
-        List<Expression> expressions = new ArrayList<>();
 
         for (Token token : input) {
             switch (token) {
                 case INCREMENT:
-                    expressions.add(Expression.incrementBy((byte) 1));
+                    exprQueue.add(Expression.incrementBy((byte) 1));
                     break;
                 case DECREMENT:
-                    expressions.add(Expression.decrementBy((byte) 1));
+                    exprQueue.add(Expression.decrementBy((byte) 1));
                     break;
                 case SHIFT_LEFT:
-                    expressions.add(Expression.shiftLeft((byte) 1));
+                    exprQueue.add(Expression.shiftLeft((byte) 1));
                     break;
                 case SHIFT_RIGHT:
-                    expressions.add(Expression.shiftRight((byte) 1));
+                    exprQueue.add(Expression.shiftRight((byte) 1));
                     break;
                 case OUT:
-                    completeExpressionStatementIfNeeded(returnStatements, loopStack, expressions);
-                    returnStatement(returnStatements, loopStack, Statement.newPrintStatement());
+                    addPendingExpressionsToParseModel();
+                    addStatementToParseModel(Statement.newPrintStatement());
                     break;
                 case LOOP_START:
-                    completeExpressionStatementIfNeeded(returnStatements, loopStack, expressions);
+                    addPendingExpressionsToParseModel();
                     loopStack.push(Statement.newLoopStatement());
                     break;
                 case LOOP_END:
-                    completeExpressionStatementIfNeeded(returnStatements, loopStack, expressions);
-                    checkOpenLoop(loopStack);
-                    returnStatement(returnStatements, loopStack, loopStack.pop());
+                    addPendingExpressionsToParseModel();
+                    checkOpenLoopExists();
+                    addStatementToParseModel(loopStack.pop());
                     break;
             }
         }
-        checkNoOpenLoops(loopStack);
-        completeExpressionStatementIfNeeded(returnStatements, loopStack, expressions);
-        return returnStatements;
+        checkNoOpenLoopsExist();
+        addPendingExpressionsToParseModel();
+        return parseModel;
     }
 
-    private static void checkOpenLoop(Deque<LoopStatement> loopStack) throws BrainfuckCompilationException {
+    private void addPendingExpressionsToParseModel() {
+        if (!exprQueue.isEmpty()) {
+            Statement previousStatement = Statement.newExpressionStatement(exprQueue.toArray(new Expression[0]));
+            addStatementToParseModel(previousStatement);
+            exprQueue.clear();
+        }
+    }
+
+    private void addStatementToParseModel(Statement stmt) {
+        if (loopStack.isEmpty()) {
+            parseModel.add(stmt);
+        } else {
+            loopStack.peek().addStatement(stmt);
+        }
+    }
+
+    private void checkOpenLoopExists() throws BrainfuckCompilationException {
         if (loopStack.isEmpty()) {
             String msg = String.format("Found incorrectly closed loop. Every '%s' command must be prepended by '%s'.",
                     LOOP_END.getLexeme(), LOOP_START.getLexeme());
@@ -85,7 +107,7 @@ public class Parser {
         }
     }
 
-    private static void checkNoOpenLoops(Deque<LoopStatement> loopStack) throws BrainfuckCompilationException {
+    private void checkNoOpenLoopsExist() throws BrainfuckCompilationException {
         if (!loopStack.isEmpty()) {
             String msg = String.format("Found unclosed loop. Every '%s' command must be followed by '%s'.",
                     LOOP_START.getLexeme(), LOOP_END.getLexeme());
@@ -93,22 +115,4 @@ public class Parser {
         }
     }
 
-    private static void completeExpressionStatementIfNeeded(List<Statement> returnStatements,
-                                                            Deque<LoopStatement> statementStack,
-                                                            List<Expression> expressions) {
-        if (!expressions.isEmpty()) {
-            Statement previousStatement = Statement.newExpressionStatement(expressions.toArray(new Expression[0]));
-            returnStatement(returnStatements, statementStack, previousStatement);
-            expressions.clear();
-        }
-    }
-
-    private static void returnStatement(List<Statement> returnStatements, Deque<LoopStatement> statementStack,
-                                        Statement statement) {
-        if (statementStack.isEmpty()) {
-            returnStatements.add(statement);
-        } else {
-            statementStack.peek().addStatement(statement);
-        }
-    }
 }

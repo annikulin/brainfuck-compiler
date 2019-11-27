@@ -13,8 +13,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LexicalAnalyzer {
 
-    // avoid instantiating utility class
-    private LexicalAnalyzer() {
+    private Reader input;
+
+    // private constructor to avoid initialization from outside
+    private LexicalAnalyzer(Reader input) {
+        this.input = input;
+    }
+
+    public static LexicalAnalyzer from(Reader input) {
+        return new LexicalAnalyzer(input);
     }
 
     /**
@@ -22,11 +29,10 @@ public class LexicalAnalyzer {
      * <p>
      * Ignores characters determined as whitespaces by {@link Character#isWhitespace(char)} method.
      *
-     * @param input a source stream of characters
      * @return a list of corresponding tokens
      * @throws IOException if I/O error occurred
      */
-    public static List<Token> tokenize(Reader input) throws IOException {
+    public List<Token> tokenize() throws IOException {
         checkNotNull(input);
         // random access is not needed while insertion is faster in LinkedList
         @SuppressWarnings("JdkObsolete")

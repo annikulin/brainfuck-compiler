@@ -46,6 +46,6 @@ class CodeOptimizerTest {
                         )
                 )
         );
-        assertEquals(expectedOptimizedStatements, CodeOptimizer.optimize(statements));
+        assertEquals(expectedOptimizedStatements, CodeOptimizer.from(statements).optimize());
     }
 }

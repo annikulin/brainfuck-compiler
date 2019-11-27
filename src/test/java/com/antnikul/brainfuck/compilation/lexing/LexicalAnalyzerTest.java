@@ -16,7 +16,7 @@ class LexicalAnalyzerTest {
     @Test
     @DisplayName("LexicalAnalyzer should split a sequence of input characters and convert them into tokens")
     void tokenize() throws IOException {
-        List<Token> actualTokens = LexicalAnalyzer.tokenize(new StringReader("[->+]"));
+        List<Token> actualTokens = LexicalAnalyzer.from(new StringReader("[->+]")).tokenize();
         List<Token> expectedTokens = Arrays.asList(
                 Token.LOOP_START,
                 Token.DECREMENT,
@@ -30,14 +30,14 @@ class LexicalAnalyzerTest {
     @Test
     @DisplayName("LexicalAnalyzer should gracefully handle empty stream")
     void tokenizeWithEmptyString() throws IOException {
-        List<Token> actualTokens = LexicalAnalyzer.tokenize(new StringReader(""));
+        List<Token> actualTokens = LexicalAnalyzer.from(new StringReader("")).tokenize();
         assertTrue(actualTokens.isEmpty());
     }
 
     @Test
     @DisplayName("LexicalAnalyzer should ignore whitespace characters")
     void tokenizeWithWhitespaces() throws IOException {
-        List<Token> actualTokens = LexicalAnalyzer.tokenize(new StringReader(">\n\t <\r"));
+        List<Token> actualTokens = LexicalAnalyzer.from(new StringReader(">\n\t <\r")).tokenize();
         List<Token> expectedTokens = Arrays.asList(Token.SHIFT_RIGHT, Token.SHIFT_LEFT);
         assertEquals(expectedTokens, actualTokens);
     }

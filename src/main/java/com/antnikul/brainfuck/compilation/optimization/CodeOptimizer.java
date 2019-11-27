@@ -11,15 +11,24 @@ public class CodeOptimizer {
 
     private static OptimizationStrategy DEFAULT_OPT_STRATEGY = new DefaultOptimizationStrategy();
 
+    private List<Statement> statements;
+    private OptimizationStrategy strategy;
+
     // avoid instantiating utility class
-    private CodeOptimizer() {
+    private CodeOptimizer(List<Statement> statements, OptimizationStrategy strategy) {
+        this.statements = statements;
+        this.strategy = strategy;
     }
 
-    public static List<Statement> optimize(List<Statement> statements) {
-        return optimize(statements, DEFAULT_OPT_STRATEGY);
+    public static CodeOptimizer from(List<Statement> statements) {
+        return from(statements, DEFAULT_OPT_STRATEGY);
     }
 
-    public static List<Statement> optimize(List<Statement> statements, OptimizationStrategy strategy) {
+    public static CodeOptimizer from(List<Statement> statements, OptimizationStrategy strategy) {
+        return new CodeOptimizer(statements, strategy);
+    }
+
+    public List<Statement> optimize() {
         statements.forEach(s -> s.optimize(strategy));
         return statements;
     }
