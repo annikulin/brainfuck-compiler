@@ -1,5 +1,6 @@
 package com.antnikul.brainfuck;
 
+import com.antnikul.brainfuck.compilation.BrainfuckCompilationException;
 import com.antnikul.brainfuck.compilation.BrainfuckTranspiler;
 import com.antnikul.brainfuck.compilation.codegeneration.JavaScriptCodeGenerator;
 import com.antnikul.brainfuck.execution.BrainfuckExecutionException;
@@ -82,6 +83,9 @@ public class BrainfuckCompiler {
         } catch (BrainfuckExecutionException e) {
             LOGGER.error("Failed to execute Brainfuck program \u274C", e);
             System.exit(1);
+        } catch (BrainfuckCompilationException e) {
+            LOGGER.error("Failed to compile Brainfuck program \u274C", e);
+            System.exit(1);
         }
     }
 
@@ -98,6 +102,9 @@ public class BrainfuckCompiler {
             transpiler.transpile(input, output);
             LOGGER.info("Brainfuck program has been successfully transpiled to JavaScript ({}) \uD83D\uDC4D",
                     outputFilePath);
+        } catch (BrainfuckCompilationException e) {
+            LOGGER.error("Failed to transpile Brainfuck program \u274C", e);
+            System.exit(1);
         }
     }
 

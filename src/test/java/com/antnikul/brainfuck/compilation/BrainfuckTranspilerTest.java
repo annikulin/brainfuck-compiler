@@ -18,7 +18,7 @@ class BrainfuckTranspilerTest {
 
     @Test
     @DisplayName("Transpiled HelloWorld program should write `Hello World!` to the output stream")
-    void transpileHelloWorld() throws IOException, ScriptException {
+    void transpileHelloWorld() throws IOException, ScriptException, BrainfuckCompilationException {
         StringWriter output = new StringWriter();
 
         BrainfuckTranspiler transpiler = new BrainfuckTranspiler(new JavaScriptCodeGenerator());

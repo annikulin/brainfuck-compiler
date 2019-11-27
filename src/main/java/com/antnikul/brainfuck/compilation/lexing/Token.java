@@ -4,13 +4,20 @@ package com.antnikul.brainfuck.compilation.lexing;
  * A categorized character representing a command in Brainfuck language.
  */
 public enum Token {
-    SHIFT_RIGHT,
-    SHIFT_LEFT,
-    INCREMENT,
-    DECREMENT,
-    OUT,
-    LOOP_START,
-    LOOP_END;
+    SHIFT_RIGHT('>'),
+    SHIFT_LEFT('<'),
+    INCREMENT('+'),
+    DECREMENT('-'),
+    OUT('.'),
+    LOOP_START('['),
+    LOOP_END(']');
+
+    private final char lexeme;
+
+    Token(char lexeme) {
+        this.lexeme = lexeme;
+    }
+
 
     /**
      * Returns a {@code Token} object holding the value extracted from the given character.
@@ -37,5 +44,9 @@ public enum Token {
             default:
                 throw new IllegalArgumentException("Character '" + c + "' is not a valid lexeme in Brainfuck language");
         }
+    }
+
+    public char getLexeme() {
+        return lexeme;
     }
 }

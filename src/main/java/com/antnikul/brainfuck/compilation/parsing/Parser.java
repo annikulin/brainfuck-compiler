@@ -1,5 +1,6 @@
 package com.antnikul.brainfuck.compilation.parsing;
 
+import com.antnikul.brainfuck.compilation.BrainfuckCompilationException;
 import com.antnikul.brainfuck.compilation.lexing.Token;
 import com.antnikul.brainfuck.compilation.parsing.expression.Expression;
 import com.antnikul.brainfuck.compilation.parsing.statement.LoopStatement;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import static com.antnikul.brainfuck.compilation.lexing.Token.LOOP_END;
+import static com.antnikul.brainfuck.compilation.lexing.Token.LOOP_START;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -31,8 +34,9 @@ public class Parser {
      *
      * @param input a sequence of input elements representing the program
      * @return a list of statements
+     * @throws BrainfuckCompilationException if parser fails to construct the parse model from the token sequence
      */
-    public static List<Statement> parse(List<Token> input) {
+    public static List<Statement> parse(List<Token> input) throws BrainfuckCompilationException {
         checkNotNull(input);
 
         List<Statement> returnStatements = new ArrayList<>();
@@ -63,13 +67,30 @@ public class Parser {
                     break;
                 case LOOP_END:
                     completeExpressionStatementIfNeeded(returnStatements, loopStack, expressions);
+                    checkOpenLoop(loopStack);
                     returnStatement(returnStatements, loopStack, loopStack.pop());
                     break;
             }
         }
+        checkNoOpenLoops(loopStack);
         completeExpressionStatementIfNeeded(returnStatements, loopStack, expressions);
-
         return returnStatements;
+    }
+
+    private static void checkOpenLoop(Deque<LoopStatement> loopStack) throws BrainfuckCompilationException {
+        if (loopStack.isEmpty()) {
+            String msg = String.format("Found incorrectly closed loop. Every '%s' command must be prepended by '%s'.",
+                    LOOP_END.getLexeme(), LOOP_START.getLexeme());
+            throw new BrainfuckCompilationException(msg);
+        }
+    }
+
+    private static void checkNoOpenLoops(Deque<LoopStatement> loopStack) throws BrainfuckCompilationException {
+        if (!loopStack.isEmpty()) {
+            String msg = String.format("Found unclosed loop. Every '%s' command must be followed by '%s'.",
+                    LOOP_START.getLexeme(), LOOP_END.getLexeme());
+            throw new BrainfuckCompilationException(msg);
+        }
     }
 
     private static void completeExpressionStatementIfNeeded(List<Statement> returnStatements,

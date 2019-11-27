@@ -31,7 +31,7 @@ public class BrainfuckTranspiler {
      * @param output an output stream to write transpiled program
      * @throws IOException if I/O error occurred
      */
-    public void transpile(Reader input, Writer output) throws IOException {
+    public void transpile(Reader input, Writer output) throws IOException, BrainfuckCompilationException {
         List<Token> tokens = LexicalAnalyzer.tokenize(input);
         List<Statement> statements = Parser.parse(tokens);
         List<Statement> optimizedStatements = CodeOptimizer.optimize(statements);

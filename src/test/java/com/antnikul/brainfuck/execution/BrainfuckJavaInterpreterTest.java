@@ -1,5 +1,6 @@
 package com.antnikul.brainfuck.execution;
 
+import com.antnikul.brainfuck.compilation.BrainfuckCompilationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BrainfuckJavaInterpreterTest {
     @Test
     @DisplayName("Compiler running HelloWorld program should write `Hello World!` to the output stream")
-    void runHelloWorld() throws IOException, BrainfuckExecutionException {
+    void runHelloWorld() throws IOException, BrainfuckExecutionException, BrainfuckCompilationException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
 
@@ -27,7 +28,7 @@ class BrainfuckJavaInterpreterTest {
 
     @Test
     @DisplayName("Compiler running SumTwoValues program must sum up values in the execution runtime")
-    void runSumTwoValues() throws IOException, BrainfuckExecutionException {
+    void runSumTwoValues() throws IOException, BrainfuckExecutionException, BrainfuckCompilationException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
         runtime.incrementCellValue((byte) 111);
@@ -46,7 +47,7 @@ class BrainfuckJavaInterpreterTest {
 
     @Test
     @DisplayName("Compiler running factorial algorithm should write first five factorials to the output stream")
-    void runFactorialAlgorithm() throws IOException, BrainfuckExecutionException {
+    void runFactorialAlgorithm() throws IOException, BrainfuckExecutionException, BrainfuckCompilationException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ExecutionRuntime runtime = new ExecutionRuntime(outputStream);
 
