@@ -4,7 +4,7 @@
 
 ## Overview
 
-Brainfuck compiler that can execute Brainfuck programs in Java and transpile them to JavaScript.
+Brainfuck compiler that executes Brainfuck code in Java and transpiles it to JavaScript.
 
 The following phases of the compiler are supported:
 1. Lexical Analysis (Tokenization). The text of the program is broken up into `Token`s and kept inside of a computer’s memory;
@@ -23,7 +23,7 @@ To execute a classic "Hello World!", create a file with Brainfuck code:
 echo "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++." > /tmp/HelloWorld.b
 ```
 
-Then, run the compiler with `./gradlew run` passing the arguments for inout Brainfuck program and output JS file. 
+Then, run the compiler with `./gradlew run` passing arguments for input Brainfuck and output JS files. 
 ```
 ./gradlew run --args="-i /tmp/HelloWorld.b -o /tmp/HelloWorld.js"
 ```
